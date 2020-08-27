@@ -43,7 +43,7 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   List<Widget> _pageOptions = <Widget>[
-    AgendaScreen2(),
+    AgendaScreen(),
     Center(
       child: Text('Another page'),
     ),

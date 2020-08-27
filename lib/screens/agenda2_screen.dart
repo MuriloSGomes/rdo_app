@@ -1,19 +1,9 @@
 import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:smart_rdo/services/atividade_service.dart';
 
-class Atividade {
-  final String nome;
 
-  Atividade({this.nome});
-
-  factory Atividade.fromJson(Map<String, dynamic> json) {
-    return Atividade(
-      nome: json['nome'],
-    );
-  }
-}
 
 class AgendaScreen2 extends StatelessWidget{
 
