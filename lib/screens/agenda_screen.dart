@@ -2,9 +2,11 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:smart_rdo/widgets/calendario.dart';
 import 'atividade/checklist_screen.dart';
-import 'package:http/http.dart' as http;
 
 class AgendaScreen extends StatelessWidget{
+  static Route route() {
+    return MaterialPageRoute<void>(builder: (_) => AgendaScreen());
+  }
 
   @override
   Widget build(BuildContext context) {

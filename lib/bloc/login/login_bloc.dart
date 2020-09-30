@@ -1,37 +1,73 @@
+import 'dart:async';
+import 'package:autenticacao_repositorio/autenticacao_repositorio.dart';
 import 'package:bloc/bloc.dart';
-import 'package:smart_rdo/services/login_service.dart';
+import 'package:equatable/equatable.dart';
+import 'package:formz/formz.dart';
+import 'package:meta/meta.dart';
+import 'package:smart_rdo/login/models/models.dart';
 
-
-import '../bloc.dart';
+part 'login_event.dart';
+part 'login_state.dart';
 
 class LoginBloc extends Bloc<LoginEvent, LoginState> {
-  LoginBloc(LoginState initialState) : super(initialState);
+  LoginBloc({
+    @required AuthenticationRepository authenticationRepository,
+  })  : assert(authenticationRepository != null),
+        _authenticationRepository = authenticationRepository,
+        super(const LoginState());
+
+  final AuthenticationRepository _authenticationRepository;
 
   @override
-  LoginState get initialState => LoginState.Inicializando();
-
-  get currentState => null;
-
-  @override
-  Stream<LoginState> mapEventToState(event) async* {
-    if (event is LoginPressedEvent) {
-      if (event.senha.isEmpty || event.login.isEmpty) {
-        yield LoginState.erro("Usuário ou senha não informado");
-        return;
-      }
-
-      yield LoginState.carregando();
-
-      try {
-        var token = await LoginService().loginValido(login: event.login, senha: event.senha);
-        //TokenRepository().persistToken(token: token);
-        yield LoginState.sucesso(token);
-      } catch (e) {
-        yield LoginState.erro(e.toString());
-      }
+  Stream<LoginState> mapEventToState(
+      LoginEvent event,
+      ) async* {
+    if (event is LoginUsernameChanged) {
+      yield _mapUsernameChangedToState(event, state);
+    } else if (event is LoginPasswordChanged) {
+      yield _mapPasswordChangedToState(event, state);
+    } else if (event is LoginSubmitted) {
+      yield* _mapLoginSubmittedToState(event, state);
     }
   }
 
-  void dispatch(LoginPressedEvent loginPressedEvent) {}
-}
+  LoginState _mapUsernameChangedToState(
+      LoginUsernameChanged event,
+      LoginState state,
+      ) {
+    final username = Username.dirty(event.username);
+    return state.copyWith(
+      username: username,
+      status: Formz.validate([state.password, username]),
+    );
+  }
 
+  LoginState _mapPasswordChangedToState(
+      LoginPasswordChanged event,
+      LoginState state,
+      ) {
+    final password = Password.dirty(event.password);
+    return state.copyWith(
+      password: password,
+      status: Formz.validate([password, state.username]),
+    );
+  }
+
+  Stream<LoginState> _mapLoginSubmittedToState(
+      LoginSubmitted event,
+      LoginState state,
+      ) async* {
+    if (state.status.isValidated) {
+      yield state.copyWith(status: FormzStatus.submissionInProgress);
+      try {
+        await _authenticationRepository.logIn(
+          username: state.username.value,
+          password: state.password.value,
+        );
+        yield state.copyWith(status: FormzStatus.submissionSuccess);
+      } on Exception catch (_) {
+        yield state.copyWith(status: FormzStatus.submissionFailure);
+      }
+    }
+  }
+}

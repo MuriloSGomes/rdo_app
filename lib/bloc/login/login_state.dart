@@ -1,61 +1,28 @@
-class LoginState {
-  final bool isInicializando;
-  final bool isCarregando;
-  final bool isSucesso;
-  final bool isErro;
-  final String token;
-  final String erro;
+part of 'login_bloc.dart';
 
-  LoginState({
-    this.isInicializando,
-    this.isCarregando,
-    this.isSucesso,
-    this.isErro,
-    this.token,
-    this.erro,
+class LoginState extends Equatable {
+  const LoginState({
+    this.status = FormzStatus.pure,
+    this.username = const Username.pure(),
+    this.password = const Password.pure(),
   });
 
-  factory LoginState.Inicializando() {
+  final FormzStatus status;
+  final Username username;
+  final Password password;
+
+  LoginState copyWith({
+    FormzStatus status,
+    Username username,
+    Password password,
+  }) {
     return LoginState(
-      isInicializando: true,
-      isCarregando:false,
-      isSucesso: false,
-      isErro: false,
-      token: null,
-      erro: null,
+      status: status ?? this.status,
+      username: username ?? this.username,
+      password: password ?? this.password,
     );
   }
 
-  factory LoginState.carregando() {
-    return LoginState(
-      isInicializando: false,
-      isCarregando:true,
-      isSucesso: false,
-      isErro: false,
-      token: null,
-      erro: null,
-    );
-  }
-
-  factory LoginState.sucesso(String token) {
-    return LoginState(
-      isInicializando: false,
-      isCarregando:false,
-      isSucesso: true,
-      isErro: false,
-      token: token,
-      erro: null,
-    );
-  }
-
-  factory LoginState.erro(String erro) {
-    return LoginState(
-      isInicializando: false,
-      isCarregando:false,
-      isSucesso: false,
-      isErro: true,
-      token: null,
-      erro: erro,
-    );
-  }
+  @override
+  List<Object> get props => [status, username, password];
 }

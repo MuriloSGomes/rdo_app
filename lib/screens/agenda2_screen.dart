@@ -18,7 +18,7 @@ class AgendaScreen2 extends StatelessWidget{
         }else if(snapshot.hasError){
           return Text("${snapshot.error}");
         }
-        return CircularProgressIndicator();
+        return Center(child: CircularProgressIndicator());
       },
     );
   }
@@ -52,6 +52,6 @@ ListTile _tile(String title, IconData icon) => ListTile(
       )),
   leading: Icon(
     icon,
-    color: Colors.blue[500],
+    color: Colors.blue,
   ),
 );

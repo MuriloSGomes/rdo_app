@@ -1,4 +1,3 @@
-import 'package:emoji_feedback/emoji_feedback.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:dashed_container/dashed_container.dart';

@@ -14,13 +14,13 @@ class LoginLogo extends StatelessWidget {
             children: <Widget>[
               Image(
                 height: MediaQuery.of(context).size.height * 0.25,
-                image: AssetImage('assets/flutterlogo.png'),
+                image: AssetImage('assets/checkList.png'),
               ),
               SizedBox(
-                height: 5,
+                height: 26,
               ),
               Text(
-                'smartie',
+                'R D O',
                 style: TextStyle(
                   letterSpacing: 5,
                   fontFamily: 'Comfortaa',
