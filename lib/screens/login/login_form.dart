@@ -10,7 +10,6 @@ class LoginForm extends StatefulWidget {
 }
 
 class _LoginFormState extends State<LoginForm> {
-
   @override
   Widget build(BuildContext context) {
     return BlocListener<LoginBloc, LoginState>(
@@ -28,28 +27,6 @@ class _LoginFormState extends State<LoginForm> {
         child: Container(
           child: Column(
             children: <Widget>[
-              Text(
-                'Hi There!',
-                style: TextStyle(
-                  fontFamily: 'Comfortaa',
-                  color: Colors.white,
-                  fontSize: 16,
-                ),
-              ),
-              SizedBox(
-                height: 3,
-              ),
-              Text(
-                'Login to Continue',
-                style: TextStyle(
-                  fontFamily: 'Comfortaa',
-                  color: Colors.white,
-                  fontSize: 16,
-                ),
-              ),
-              SizedBox(
-                height: 20,
-              ),
               BlocBuilder<LoginBloc, LoginState>(
                 buildWhen: (previous, current) =>
                     previous.username != current.username,
@@ -64,7 +41,7 @@ class _LoginFormState extends State<LoginForm> {
                       labelText: "Email or Username",
                       labelStyle: TextStyle(
                         fontFamily: 'Comfortaa',
-                        color: Colors.grey,
+                        color: Colors.black,
                         fontSize: 17,
                       ),
                       suffixIcon: Icon(Icons.person_outline),
@@ -93,7 +70,7 @@ class _LoginFormState extends State<LoginForm> {
                         labelText: "Password",
                         labelStyle: TextStyle(
                           fontFamily: 'Comfortaa',
-                          color: Colors.grey,
+                          color: Colors.black,
                           fontWeight: FontWeight.w400,
                           fontSize: 17,
                         ),
@@ -104,7 +81,7 @@ class _LoginFormState extends State<LoginForm> {
                     );
                   }),
               SizedBox(
-                height: 20,
+                height: 50,
               ),
               BlocBuilder<LoginBloc, LoginState>(
                   buildWhen: (previous, current) =>
@@ -116,10 +93,7 @@ class _LoginFormState extends State<LoginForm> {
                             height: 55,
                             width: MediaQuery.of(context).size.width / 1.2,
                             decoration: BoxDecoration(
-                              gradient: LinearGradient(colors: [
-                                Color(0xFFf7769c),
-                                Color(0xFFf99587),
-                              ]),
+                              color: Color(0xFF20B2AA),
                               borderRadius:
                                   BorderRadius.all(Radius.circular(60)),
                             ),
@@ -128,7 +102,15 @@ class _LoginFormState extends State<LoginForm> {
                               shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(30),
                               ),
-                              child: const Text('Login'),
+                              child: const Text(
+                                'Entrar',
+                                style: TextStyle(
+                                  fontFamily: 'Comfortaa',
+                                  color: Colors.black,
+                                  fontWeight: FontWeight.w400,
+                                  fontSize: 17,
+                                ),
+                              ),
                               onPressed: () => state.status.isValidated
                                   ? () {
                                       context

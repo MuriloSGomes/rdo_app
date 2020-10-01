@@ -40,7 +40,7 @@ class _LoginScreenState extends State<LoginScreen> {
           begin: Alignment.bottomLeft,
           end: Alignment.topCenter,
           stops: [0, 0.5],
-          colors: [Color(0xFF385ff1), Color(0xFF7414d8)],
+          colors: [Color(0xFFFFFFFF), Color(0xFF20B2AA)],
         ),
       ),
       child: ListView(
